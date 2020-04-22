@@ -1,49 +1,32 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, NavLink } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import { Home } from "./pages/Home";
+import { About } from "./pages/About";
+import { Features } from "./pages/Features";
+import { Header } from "./components/Header";
 
 import "./App.css";
-
-const Tab = ({ children }) => {
-  const [highlightStyle, setHighlightStyle] = useState({ left: 0, opacity: 0 });
-
-  const moveHighlight = (e) => {
-    setHighlightStyle({
-      left: e.nativeEvent.layerX - 150,
-    });
-  };
-
-  const hideHighlight = (e) => {
-    setHighlightStyle({
-      left: e.nativeEvent.layerX - 150,
-      opacity: 0,
-    });
-  };
-
-  return (
-    <div className="tab" onMouseMove={moveHighlight} onMouseOut={hideHighlight}>
-      <div className="highlight" style={highlightStyle} />
-      {children}
-    </div>
-  );
-};
 
 const App = () => {
   return (
     <Router>
       <div className="app">
         <div className="browser">
-          <div className="tabs">
-            <Tab>
-              <NavLink to="/">Home</NavLink>
-            </Tab>
-            <Tab>
-              <NavLink to="/">About</NavLink>
-            </Tab>
-            <Tab>
-              <NavLink to="/">Features</NavLink>
-            </Tab>
+          <Header />
+          <div className="viewport">
+            <Switch>
+              <Route path="/about">
+                <About />
+              </Route>
+              <Route path="/features">
+                <Features />
+              </Route>
+              <Route exact path="/">
+                <Home />
+              </Route>
+            </Switch>
           </div>
-          <div className="viewport">Pages Go Here</div>
         </div>
       </div>
     </Router>
